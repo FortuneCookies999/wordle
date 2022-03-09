@@ -1,6 +1,7 @@
 var answer = "";
 const summitBtn = document.querySelector(".submit");
 var number = 1;
+var miss = 0;
 var data = ["subway",
     "museum",
     "absent",
@@ -8,7 +9,7 @@ var data = ["subway",
     "taiwan",
     "kapkas",
     "mongol",
-    "rondon",
+    "london",
     "france",
     "poland",
     "italia",
@@ -37,18 +38,32 @@ function check(){
     if(number <= 6){
        var idName = `#div_${number}`;
        const div = document.querySelector(idName);
+       var fail = false;
        for(let i = 1; i < 7; i++){
             const className = `.input_${i}`;
             const input = div.querySelector(className);
             if(input.value === answer[i-1]){
                 input.classList.add('green');
             }else if(answer.includes(input.value)){
-                input.classList.add('yellow');
+                fail = true;
+                if(input.value != ''){
+                    input.classList.add('yellow');
+                }else{
+                    input.classList.add('gray');
+                }
             }else{
+                fail = true;
                 input.classList.add('gray');
             }
        }
+       if(fail){
+           miss++;
+       }
        number++;
+    }
+    if(miss === 6){
+        var seikai = document.querySelector("#answer");
+        seikai.innerHTML=`정답 : ${answer}`;
     }
 }
 
